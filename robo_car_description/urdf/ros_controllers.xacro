@@ -24,7 +24,7 @@
             <robot_param>robot_description</robot_param>
             <robot_namespace>robo_car</robot_namespace>
             <robot_param_node>robot_state_publisher</robot_param_node>
-            <parameters>$(find robo_car_description)/config/controllers.yaml</parameters>
+            <parameters>$(find robo_car_description)/config/robo_car_controllers.yaml</parameters>
         </plugin>
     </gazebo>
 

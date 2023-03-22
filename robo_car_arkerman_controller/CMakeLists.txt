@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.8)
-project(arkerman_drive_controller)
+project(robo_car_arkerman_controller)
 
 if(CMAKE_COMPILER_IS_GNUCXX OR CMAKE_CXX_COMPILER_ID MATCHES "Clang")
   add_compile_options(-Wall -Wextra -Wpedantic)
@@ -18,13 +18,13 @@ find_package(geometry_msgs REQUIRED)
 include_directories(include)
 
 # Create Cpp executable
-add_executable(arkerman_drive_controller src/arkerman_drive_controller.cpp)
-ament_target_dependencies(arkerman_drive_controller rclcpp std_msgs geometry_msgs)
+add_executable(robo_car_arkerman_controller src/robo_car_arkerman_controller.cpp)
+ament_target_dependencies(robo_car_arkerman_controller rclcpp std_msgs geometry_msgs)
 
 
 # Install Cpp executables
 install(TARGETS
-    arkerman_drive_controller
+    robo_car_arkerman_controller
     DESTINATION lib/${PROJECT_NAME}
 )
 ###################################################################

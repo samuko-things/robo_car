@@ -1,96 +1,90 @@
 <?xml version="1.0"?>
-<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robo_car">
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
 
+    <xacro:macro name="insert_camera" params="base_name parent_name x y z mass width height min_range max_range tilt_angle visualize">
+        <joint name="${base_name}_joint" type="fixed">
+            <parent link="${parent_name}"/>
+            <child link="${base_name}"/>
+            <origin xyz="${x} ${y} ${z}" rpy="0 ${tilt_angle} 0"/>
+        </joint>
 
-    <!-- <xacro:arg name="cam_visual"   default="false"/> -->
+        <link name="${base_name}">
+            <visual>
+                <origin xyz="-0.02 0 0" rpy="0 ${-pi/2} 0"/>
+                <geometry>
+                    <cylinder radius="0.015" length="0.04"/>
+                </geometry>
+                <material name="grey"/>
+            </visual>
+            <visual>
+                <origin xyz="-0.03 0 0" rpy="0 ${-pi/2} 0"/>
+                <geometry>
+                    <!-- <cylinder radius="0.03" length="0.02"/> -->
+                    <box size="0.04 0.06 0.02"/>
+                </geometry>
+                <material name="grey"/>
+            </visual>
 
+            <collision>
+                <origin xyz="-0.02 0 0" rpy="0 ${-pi/2} 0"/>
+                <geometry>
+                    <cylinder radius="0.02" length="0.04"/>
+                </geometry>
+            </collision>
+            <xacro:inertial_cylinder mass="${mass}" radius="0.02" length="0.04">
+                <origin xyz="-0.02 0 0" rpy="0 ${-pi/2} 0"/>
+            </xacro:inertial_cylinder>
+        </link>
 
-    <!-- CAMERA LINK FRAME -->
+        <joint name="${base_name}_optical_joint" type="fixed">
+            <parent link="${base_name}"/>
+            <child link="${base_name}_optical_link"/>
+            <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+        </joint>
 
-    <joint name="cam_joint" type="fixed">
-        <parent link="base_chassis_link"/>
-        <child link="cam_link"/>
-        <origin xyz="0.12 0 ${full_chassis_height}" rpy="0 0 0"/>
-    </joint>
-
-    <link name="cam_link">
-        <visual>
-            <origin xyz="-0.005 0 0" rpy="0 ${pi/2} 0"/>
-            <geometry>
-                <cylinder radius="0.01" length="0.01"/>
-            </geometry>
-            <material name="grey"/>
-        </visual>
-        <visual>
-            <origin xyz="-0.015 0 0" rpy="0 0 0"/>
-            <geometry>
-                <box size="0.01 0.04 0.025" />
-            </geometry>
-            <material name="grey"/>
-        </visual>
-        <collision>
-            <origin xyz="-0.01 0 0" rpy="0 0 0"/>
-            <geometry>
-                <box size="0.02 0.04 0.025"/>
-            </geometry>
-        </collision>
-        <xacro:inertial_box mass="0.0005" x="0.02" y="0.04" z="0.025">
-            <origin xyz="-0.01 0 0" rpy="0 0 0"/>
-        </xacro:inertial_box>
-
-    </link>
-
-
-    <joint name="cam_optical_joint" type="fixed">
-        <parent link="cam_link"/>
-        <child link="cam_optical_link"/>
-        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
-    </joint>
-
-    <link name="cam_optical_link"/>
+        <link name="${base_name}_optical_link"/>
 
 
 
+        <gazebo reference="${base_name}">
+            <material>Gazebo/DarkGrey</material>
 
+            <sensor type="${base_name}" name="camera">
+                <visualize>${visualize}</visualize>
+                <update_rate>20.0</update_rate>
+                <camera name="${base_name}">
+                    <horizontal_fov>1.4</horizontal_fov>
+                    <image>
+                        <width>${width}</width>
+                        <height>${height}</height>
+                        <format>R8G8B8</format>
+                    </image>
+                    <clip>
+                        <near>${min_range}</near>
+                        <far>${max_range}</far>
+                    </clip>
+                    <noise>
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.007</stddev>
+                    </noise>
+                </camera>
+                <plugin name="${base_name}_plugin" filename="libgazebo_ros_camera.so">
+                    <!-- <ros>
+                        <namespace>cam</namespace>
+                        <remapping>~/image_raw:=raw</remapping>
+                        <remapping>~/camera_info:=info</remapping>
+                    </ros> -->
+                    <!-- Set camera name. If empty, defaults to sensor name (i.e. "sensor_name") -->
+                    <camera_name>${base_name}</camera_name>
+                    <!-- Set TF frame name. If empty, defaults to link name (i.e. "link_name") -->
+                    <frame_name>${base_name}_optical_link</frame_name>
+                    <hack_baseline>0.2</hack_baseline>
+                </plugin>
+            </sensor>
+        </gazebo>
 
-    <gazebo reference="cam_link">
-        <material>Gazebo/DarkGrey</material>
+    </xacro:macro>
+        
 
-        <sensor type="camera" name="camera">
-            <visualize>$(arg cam_visual)</visualize>
-            <update_rate>15.0</update_rate>
-            <camera name="cam">
-                <horizontal_fov>1.4</horizontal_fov>
-                <image>
-                    <width>320</width>
-                    <height>240</height>
-                    <format>R8G8B8</format>
-                </image>
-                <clip>
-                    <near>0.05</near>
-                    <far>5</far>
-                </clip>
-                <noise>
-                    <type>gaussian</type>
-                    <mean>0.0</mean>
-                    <stddev>0.007</stddev>
-                </noise>
-            </camera>
-            <plugin name="rgb_cam_plugin" filename="libgazebo_ros_camera.so">
-                <!-- <ros>
-                    <namespace>cam</namespace>
-                    <remapping>~/image_raw:=raw</remapping>
-                    <remapping>~/camera_info:=info</remapping>
-                </ros> -->
-                <!-- Set camera name. If empty, defaults to sensor name (i.e. "sensor_name") -->
-                <camera_name>cam</camera_name>
-                <!-- Set TF frame name. If empty, defaults to link name (i.e. "link_name") -->
-                <frame_name>cam_optical_link</frame_name>
-                <hack_baseline>0.2</hack_baseline>
-            </plugin>
-        </sensor>
-    </gazebo>
- 
-
-  
 </robot>

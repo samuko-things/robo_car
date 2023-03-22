@@ -48,30 +48,12 @@ def generate_launch_description():
     )
 
 
-    node_arkerman_drive_controller = Node(
-        package='arkerman_drive_controller',
-        executable='arkerman_drive_controller',
+    node_robo_car_arkerman_controller = Node(
+        package='robo_car_arkerman_controller',
+        executable='robo_car_arkerman_controller',
         output='screen',
         parameters=[params]
     )
-    
-    
-
-    # node_joint_state_publisher_gui = Node(
-    #     package='joint_state_publisher_gui',
-    #     executable='joint_state_publisher_gui',
-    #     output='screen'
-    #     # parameters=[params]
-    # )
-
-    rviz_config_file_path = os.path.join(pkg_path,'config','robo_car_description_config.rviz')
-    rviz2_node = Node(
-            package='rviz2',
-            namespace='',
-            executable='rviz2',
-            name='rviz2',
-            arguments=['-d', [os.path.join(rviz_config_file_path)]]
-        )
 
 
     # # Include the Gazebo launch file, provided by the gazebo_ros package
@@ -152,8 +134,7 @@ def generate_launch_description():
 
 
         node_robot_state_publisher,
-        rviz2_node,
         gazebo,
         spawn_entity,
-        node_arkerman_drive_controller,
+        node_robo_car_arkerman_controller,
     ])

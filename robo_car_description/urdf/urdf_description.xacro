@@ -6,6 +6,11 @@
     <xacro:include filename="$(find robo_car_description)/urdf/inertia_macros.xacro"/>
     <xacro:include filename="$(find robo_car_description)/urdf/face_macro.xacro"/>
 
+    <xacro:include filename="sensors/lidar.xacro"/>
+    <xacro:include filename="sensors/imu.xacro"/>
+    <xacro:include filename="sensors/cam.xacro"/>
+    <xacro:include filename="sensors/sonar.xacro"/>
+
 
 
 
@@ -47,7 +52,7 @@
 
 
     <link name="base_chassis_link">
-        <xacro:box_with_fillet size_x="0.4" size_y="0.30" size_z="${base_chassis_height}" fr="0.08" material="silver" x="0.15" y="0" z="${base_chassis_height/2}"/>
+        <xacro:box_with_fillet size_x="0.4" size_y="0.30" size_z="${base_chassis_height}" fr="0.08" material="white" x="0.15" y="0" z="${base_chassis_height/2}"/>
         <collision>
            <origin xyz="0.15 0 ${base_chassis_height/2}" rpy="0 0 0"/>
             <geometry>
@@ -59,10 +64,10 @@
         </xacro:inertial_box>
     </link>
     <gazebo reference="base_chassis_link">
-        <material>Gazebo/Silver</material>
+        <material>Gazebo/White</material>
     </gazebo>
 
-    <xacro:insert_face parent_name="base_chassis_link" x="${0.15+0.2}" y="0" z="${base_chassis_height/2}"/>
+    <!-- <xacro:insert_face parent_name="base_chassis_link" x="${0.15+0.2}" y="0" z="${base_chassis_height/2}"/> -->
     <!--  ########################### -->
 
 
@@ -598,10 +603,55 @@
 
 
 
-    <!-- <xacro:include filename="$(find robo_car_description)/urdf/sensors/imu.xacro"/>
-    <xacro:include filename="$(find robo_car_description)/urdf/sensors/lidar.xacro"/>
-    <xacro:include filename="$(find robo_car_description)/urdf/sensors/cam.xacro"/>
-    <xacro:include filename="$(find robo_car_description)/urdf/sensors/sonar.xacro"/> -->
+       <!--  lidar -->
+    <xacro:property name="lidar_z_offset" value="0.1"/>
+    <xacro:insert_lidar 
+        base_name="lidar" 
+        parent_name="base_chassis_link" 
+        x="0.15" y="0" z="${base_chassis_height+lidar_z_offset}"
+        mass="0.08" samples="360"
+        min_angle="${-pi*2}" max_angle="${pi*2}"
+        min_range="0.1" max_range="10"
+        visualize="false"/>
+
+
+
+
+    <!--  imu -->
+    <xacro:insert_imu
+        base_name="imu" 
+        parent_name="base_chassis_link" 
+        x="0" y="0" z="${base_chassis_height}"/>
+
+
+
+
+
+
+
+    <!--  normal camera style -->
+    <xacro:property name="cam_x_offset" value="0.04"/>
+    <xacro:property name="cam_z_offset" value="0.02"/>
+    <xacro:insert_camera
+        base_name="cam" 
+        parent_name="base_chassis_link" 
+        x="${0.15+0.2+cam_x_offset}" y="0" z="${base_chassis_height+cam_z_offset}"
+        mass="0.005"
+        width="640" height="480"
+        min_range="0.02" max_range="5.0"
+        tilt_angle="0"
+        visualize="true"/>
+
+
+
+    <!--  front sonar sensor -->
+    <xacro:insert_sonar
+        base_name="sonar" 
+        parent_name="base_chassis_link" 
+        x="${0.15+0.2+0.005}" y="0" z="${(base_chassis_height/2)}"
+        mass="0.0005"
+        min_range="0.02" max_range="3.0"
+        resolution="0.01" visualize="false"/>
 
   
 </robot>
