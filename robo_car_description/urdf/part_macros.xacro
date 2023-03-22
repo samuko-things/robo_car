@@ -1,0 +1,229 @@
+<?xml version="1.0"?>
+<robot name="rover" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+
+    <xacro:macro name="box_with_fillet" params="size_x size_y size_z fr material x y z">
+            <!-- logitudinal box -->
+            <visual>
+                <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${size_x} ${size_y-(2*fr)} ${size_z}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <!-- lateral box -->
+            <visual>
+                <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${size_x-(2*fr)} ${size_y} ${size_z}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <!-- cylinder1 -->
+            <visual>
+                <origin xyz="${x+((size_x/2)-fr)} ${y+((size_y/2)-fr)} ${z}" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${size_z}" radius="${fr}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <!-- cylinder2 -->
+            <visual>
+                <origin xyz="${x+((size_x/2)-fr)} ${y-((size_y/2)-fr)} ${z}" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${size_z}" radius="${fr}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <!-- cylinder3 -->
+            <visual>
+                <origin xyz="${x-((size_x/2)-fr)} ${y+((size_y/2)-fr)} ${z}" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${size_z}" radius="${fr}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+            <!-- cylinder4 -->
+            <visual>
+                <origin xyz="${x-((size_x/2)-fr)} ${y-((size_y/2)-fr)} ${z}" rpy="0 0 0"/>
+                <geometry>
+                    <cylinder length="${size_z}" radius="${fr}"/>
+                </geometry>
+                <material name="${material}"/>
+            </visual>
+    </xacro:macro>
+
+
+
+    <xacro:macro name="insert_drive_wheel">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.065" length="0.06"/>
+            </geometry>
+            <material name="black"/>
+        </visual>
+        <collision>
+           <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <cylinder radius="0.065" length="0.06"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.2" length="0.06" radius="0.065">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </xacro:macro>
+
+
+    <xacro:macro name="insert_wheel_rim">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.01 0.07 0.0605"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
+            <geometry>
+                <box size="0.01 0.07 0.0605"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${-pi/4}"/>
+            <geometry>
+                <box size="0.01 0.07 0.0605"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 ${pi/4}"/>
+            <geometry>
+                <box size="0.01 0.07 0.0605"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+    </xacro:macro>
+
+
+
+
+    <xacro:macro name="insert_servo_hinge">
+        <visual>
+            <origin xyz="0 -0.015 -0.005" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.05 0.07 0.01"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <collision>
+           <origin xyz="0 -0.015 -0.005" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.05 0.07 0.01"/>
+            </geometry>
+        </collision>
+
+        <visual>
+            <origin xyz="0 -0.045 -0.05" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.05 0.01 0.1"/>
+            </geometry>
+            <material name="orange"/>
+        </visual>
+        <collision>
+           <origin xyz="0 -0.05 -0.05" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.05 0.01 0.1"/>
+            </geometry>
+        </collision>
+        <xacro:inertial_cylinder mass="0.1" length="0.11" radius="0.025">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </xacro:macro>
+
+
+
+
+
+       <xacro:macro name="insert_rocker_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="${rocker_length} 0.05 0.02"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="${rocker_length} 0.05 0.02"/>
+            </geometry>
+        </collision>
+
+        <xacro:inertial_box mass="0.2" x="${rocker_length}" y="0.05" z="0.02">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </xacro:macro>
+
+
+
+
+
+
+
+    <xacro:macro name="insert_boggie_link">
+        <visual>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.05 ${boggie_length} 0.02"/>
+            </geometry>
+            <material name="grey"/>
+        </visual>
+        
+        <collision>
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+            <geometry>
+                <box size="0.05 ${boggie_length} 0.02"/>
+            </geometry>
+        </collision>
+
+        <xacro:inertial_box mass="0.2" x="0.05" y="${boggie_length}" z="0.2">
+            <origin xyz="0 0 0" rpy="0 0 0"/>
+        </xacro:inertial_box>
+    </xacro:macro>
+
+
+
+
+
+
+
+    <xacro:macro name="insert_servo_transmission" params="joint_name">
+        <joint name="${joint_name}">
+            <command_interface name="position">
+                <param name="min">${-pi/2}</param>
+                <param name="max">${pi/2}</param>
+            </command_interface>
+            <state_interface name="position"/>
+        </joint>
+    </xacro:macro>
+
+
+    <xacro:macro name="insert_wheel_transmission" params="joint_name">
+        <joint name="${joint_name}">
+            <command_interface name="velocity">
+                <param name="min">-10.0</param>
+                <param name="max">10.0</param>
+            </command_interface>
+            <state_interface name="position"/>
+            <state_interface name="velocity"/>
+        </joint>
+    </xacro:macro>
+
+
+
+
+    
+</robot>

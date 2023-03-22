@@ -1,0 +1,90 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro"  name="robo_car">
+
+
+    <!-- <xacro:arg name="sonar_visual"   default="false"/> -->
+    <xacro:property name="deg2rad" value="0.017460317"/>
+    <xacro:property name="scan_angle" value="1"/>
+
+
+  <!-- SONAR LINK FRAME -->
+
+    <joint name="sonar_joint" type="fixed">
+        <parent link="base_chassis_link"/>
+        <child link="sonar_link"/>
+        <origin xyz="0.12 0 ${base_chassis_height/2}" rpy="0 0 0"/>
+        <axis xyz="0 0 0"/>
+    </joint>
+
+    <link name="sonar_link">
+        <visual>
+            <origin xyz="-0.015 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder radius="0.015" length="0.03" />
+            </geometry>
+            <material name="blue"/>
+        </visual>
+
+        <collision>
+            <origin xyz="-0.015 0 0" rpy="0 ${pi/2} 0"/>
+            <geometry>
+                <cylinder radius="0.0i5" length="0.03" />
+            </geometry>
+        </collision>
+        
+        <xacro:inertial_cylinder mass="0.0005" length="0.03" radius="0.015">
+            <origin xyz="-0.015 0 0" rpy="0 0 0"/>
+        </xacro:inertial_cylinder>
+    </link>
+
+
+
+    <gazebo reference="sonar_link">
+        <material>Gazebo/Blue</material>
+
+        <sensor name="sonar" type="ray">
+            <always_on>true</always_on>
+            <visualize>$(arg sonar_visual)</visualize>
+            <pose>0.0 0 0.0 0 0 0</pose>
+            <update_rate>20</update_rate>
+            <ray>
+                <scan>
+                    <horizontal>
+                    <samples>20</samples>
+                    <resolution>1</resolution> 
+                    <min_angle>${-scan_angle * deg2rad}</min_angle>
+                    <max_angle>${scan_angle * deg2rad}</max_angle>
+                    </horizontal>
+                    <vertical>
+                    <samples>20</samples>
+                    <resolution>1</resolution> 
+                    <min_angle>${-scan_angle * deg2rad}</min_angle>
+                    <max_angle>${scan_angle * deg2rad}</max_angle>
+                    </vertical>
+                </scan>
+                <range>
+                    <min>0.01</min>
+                    <max>2</max>
+                    <resolution>0.02</resolution>
+                </range>
+            </ray>
+      
+            <plugin name="sonar_plugin" filename="libgazebo_ros_ray_sensor.so">
+                <ros>
+                    <namespace>sonar</namespace>
+                    <remapping>~/out:=range</remapping>
+                </ros>
+                <output_type>sensor_msgs/Range</output_type>
+                <radiation_type>ultrasound</radiation_type>
+                <frame_name>sonar_link</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo>
+
+
+  
+</robot>
+
+
+
+
