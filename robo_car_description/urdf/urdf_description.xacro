@@ -6,10 +6,10 @@
     <xacro:include filename="$(find robo_car_description)/urdf/inertia_macros.xacro"/>
     <xacro:include filename="$(find robo_car_description)/urdf/face_macro.xacro"/>
 
-    <xacro:include filename="sensors/lidar.xacro"/>
-    <xacro:include filename="sensors/imu.xacro"/>
-    <xacro:include filename="sensors/cam.xacro"/>
-    <xacro:include filename="sensors/sonar.xacro"/>
+    <xacro:include filename="$(find robo_car_description)/urdf/sensors/lidar.xacro"/>
+    <xacro:include filename="$(find robo_car_description)/urdf/sensors/imu.xacro"/>
+    <xacro:include filename="$(find robo_car_description)/urdf/sensors/cam.xacro"/>
+    <xacro:include filename="$(find robo_car_description)/urdf/sensors/sonar.xacro"/>
 
 
 
@@ -21,10 +21,10 @@
     <!-- <xacro:property name="support_radius" value="0.005"/> -->
 
 
-    <!-- <xacro:arg name="laser_visual" default="false"/>
+    <xacro:arg name="laser_visual" default="false"/>
     <xacro:arg name="imu_visual"   default="true"/>
     <xacro:arg name="sonar_visual"   default="false"/>
-    <xacro:arg name="cam_visual"   default="false"/> -->
+    <xacro:arg name="cam_visual"   default="false"/>
 
     
 
@@ -59,7 +59,7 @@
                 <box size="0.4 0.3 ${base_chassis_height}"/>
             </geometry>
         </collision>
-        <xacro:inertial_box mass="3" x="0.4" y="0.3" z="${base_chassis_height}">
+        <xacro:inertial_box mass="8.0" x="0.4" y="0.3" z="${base_chassis_height}">
             <origin xyz="0.15 0 ${base_chassis_height/2}" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
@@ -639,7 +639,7 @@
         mass="0.005"
         width="640" height="480"
         min_range="0.02" max_range="5.0"
-        tilt_angle="0"
+        tilt_angle="${pi/72}"
         visualize="true"/>
 
 

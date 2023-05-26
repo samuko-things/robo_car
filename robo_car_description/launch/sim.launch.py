@@ -95,9 +95,9 @@ def generate_launch_description():
     # )
     # # Replace the diff_drive_controller_spawner in the final return with delayed_diff_drive_controller_spawner
 
-    node_robo_car_arkerman_controller = Node(
-        package='robo_car_arkerman_controller',
-        executable='robo_car_arkerman_controller',
+    my_ackermann_drive_controller_node = Node(
+        package='my_ackermann_drive_controller',
+        executable='my_ackermann_drive_controller',
         output='screen',
     )
     
@@ -118,7 +118,7 @@ def generate_launch_description():
     ld.add_action(joint_state_broadcaster_spawner)
     ld.add_action(position_controller_spawner)
     ld.add_action(velocity_controller_spawner)
-    ld.add_action(node_robo_car_arkerman_controller)
+    ld.add_action(my_ackermann_drive_controller_node)
 
     
     return ld      # return (i.e send) the launch description for excecution

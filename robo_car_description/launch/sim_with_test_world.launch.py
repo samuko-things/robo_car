@@ -19,7 +19,7 @@ def generate_launch_description():
 
     package_name='robo_car_description' #<--- CHANGE ME
     
-    world_file_name = 'empty.world'
+    world_file_name = 'test_world.world'
     world_path = os.path.join(get_package_share_directory(package_name), 'world', world_file_name)
     
     declare_world_cmd = DeclareLaunchArgument(
@@ -35,7 +35,7 @@ def generate_launch_description():
             launch_arguments={'use_sim_time': 'true'}.items()
     )
     
-    rviz_config_file = os.path.join(get_package_share_directory(package_name),'config','robot_view_sim.rviz')
+    rviz_config_file = os.path.join(get_package_share_directory(package_name),'config','robot_view_with_sensors.rviz')
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',

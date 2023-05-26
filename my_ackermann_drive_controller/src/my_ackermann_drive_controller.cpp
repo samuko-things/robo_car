@@ -15,6 +15,7 @@
 #include "std_msgs/msg/string.hpp"
 #include "std_msgs/msg/float64_multi_array.hpp"
 #include "geometry_msgs/msg/twist.hpp"
+#include "ackermann_msgs/msg/ackermann_drive.hpp"
 
 
 
@@ -28,36 +29,38 @@ public:
     using StringMsg = std_msgs::msg::String;
     using TwistMsg = geometry_msgs::msg::Twist;
     using Float64MultiArrayMsg = std_msgs::msg::Float64MultiArray;
+    using AckermannDriveMsg = ackermann_msgs::msg::AckermannDrive;
 
     // create the node constructor
     ArkermanDriveControllerNode() : Node("arkerman_drive_controller_node")
     {
         _wheel_vel_publisher = this->create_publisher<Float64MultiArrayMsg>("velocity_controller/commands", 10);
         _wheel_pos_publisher = this->create_publisher<Float64MultiArrayMsg>("position_controller/commands", 10);
-        _cmd_subscriber = this->create_subscription<Float64MultiArrayMsg>("drive_cmd", 10, std::bind(&ArkermanDriveControllerNode::driveCallbackFunction, this, _1));
+        _cmd_subscriber = this->create_subscription<AckermannDriveMsg>("cmd_ackermann", 10, std::bind(&ArkermanDriveControllerNode::driveCallbackFunction, this, _1));
     }
 
 private:
     // std::shared_ptr<rclcpp::Subscription<TwistMsg>> _cmd_subscriber;
-    rclcpp::Subscription<Float64MultiArrayMsg>::SharedPtr _cmd_subscriber;
+    
     rclcpp::Publisher<Float64MultiArrayMsg>::SharedPtr _wheel_vel_publisher;
     rclcpp::Publisher<Float64MultiArrayMsg>::SharedPtr _wheel_pos_publisher;
+    rclcpp::Subscription<AckermannDriveMsg>::SharedPtr _cmd_subscriber;
 
     double V_robot=0.0, W_robot=0.0, R=0.0;
-    double steer_angle_rad = 0, steer_angle_deg;
+    double steer_angle_rad = 0;
 
     // robot parameter
-    double max_steer_angle_deg = 50.0;
+    double max_steer_angle_rad = 1.047196; //rads => 60 deg
     double wheelRadius = 0.05;
     double D1 = 0.3, L1 = 0.238, L = 0.342, offset=0.031;
 
-    double deg2rad(float degree){
-        double pi = 3.14159265359;
-        return (degree * (pi/180));
-    }
+    // double deg2rad(float degree){
+    //     double pi = 3.14159265359;
+    //     return (degree * (pi/180));
+    // }
 
 private:
-    void driveCallbackFunction(const Float64MultiArrayMsg::SharedPtr _cmd){
+    void driveCallbackFunction(const AckermannDriveMsg::SharedPtr _cmd){
 
         Float64MultiArrayMsg wheel_vel_command;
         Float64MultiArrayMsg wheel_pos_command;
@@ -66,10 +69,10 @@ private:
         double theta_l1=0.0, theta_r1=0.0;
         
 
-        V_robot = _cmd->data[0];
-        steer_angle_deg = _cmd->data[1];
-        if(steer_angle_deg>=max_steer_angle_deg) steer_angle_deg = max_steer_angle_deg;
-        steer_angle_rad = this->deg2rad(steer_angle_deg);
+        V_robot = _cmd->speed;
+        steer_angle_rad = _cmd->steering_angle;
+        if(steer_angle_rad>=max_steer_angle_rad) steer_angle_rad = max_steer_angle_rad;
+        
         // RCLCPP_INFO(this->get_logger(), "v_robot: %0.3f, steer_angle: %0.3f", V_robot, steer_angle_rad);
 
 

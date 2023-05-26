@@ -14,6 +14,7 @@
 
         <xacro:insert_wheel_transmission joint_name="front_left_wheel_joint"/>
         <xacro:insert_wheel_transmission joint_name="front_right_wheel_joint"/>
+        
         <xacro:insert_wheel_transmission joint_name="rear_left_wheel_joint"/>
         <xacro:insert_wheel_transmission joint_name="rear_right_wheel_joint"/>
     </ros2_control>
@@ -38,9 +39,10 @@
 
             <joint_name>front_left_servo_joint</joint_name>
             <joint_name>front_right_servo_joint</joint_name>
-            <joint_name>rear_left_servo_joint</joint_name>
-            <joint_name>rear_right_servo_joint</joint_name>
 
+            <joint_name>front_left_wheel_joint</joint_name>
+            <joint_name>front_right_wheel_joint</joint_name>
+          
             <joint_name>rear_left_wheel_joint</joint_name>
             <joint_name>rear_right_wheel_joint</joint_name>
         </plugin>
