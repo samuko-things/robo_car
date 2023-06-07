@@ -35,7 +35,7 @@ def generate_launch_description():
             launch_arguments={'use_sim_time': 'true'}.items()
     )
     
-    rviz_config_file = os.path.join(get_package_share_directory(package_name),'config','robot_view_with_sensors.rviz')
+    rviz_config_file = os.path.join(get_package_share_directory(package_name),'config','robot_view.rviz')
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',
@@ -73,6 +73,9 @@ def generate_launch_description():
         output='screen')
 
 
+
+
+
     position_controller_spawner = Node(
         package="controller_manager",
         executable="spawner",
@@ -91,24 +94,36 @@ def generate_launch_description():
         arguments=["joint_state_broadcaster"],
     )
 
-    # from launch.actions import RegisterEventHandler
-    # from launch.event_handlers import OnProcessExit
+    from launch.actions import RegisterEventHandler
+    from launch.event_handlers import OnProcessExit
     
-    # # Then add the following below the current diff_drive_controller_spawner
-    # delayed_diff_drive_controller_spawner = RegisterEventHandler(
-    #     event_handler=OnProcessExit(
-    #         target_action=spawn_entity,
-    #         on_exit=[diff_drive_controller_spawner],
-    #     )
-    # )
-    # # Replace the diff_drive_controller_spawner in the final return with delayed_diff_drive_controller_spawner
+    delayed_position_controller_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=spawn_entity,
+            on_exit=[position_controller_spawner],
+        )
+    )
+
+    delayed_velocity_controller_spawner = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=position_controller_spawner,
+            on_exit=[velocity_controller_spawner],
+        )
+    )
+
 
     my_ackermann_drive_controller_node = Node(
         package='my_ackermann_drive_controller',
         executable='my_ackermann_drive_controller',
         output='screen',
     )
-    
+
+    delayed_my_ackermann_drive_controller_node = RegisterEventHandler(
+        event_handler=OnProcessExit(
+            target_action=velocity_controller_spawner,
+            on_exit=[my_ackermann_drive_controller_node],
+        )
+    )
     
     
     
@@ -126,9 +141,12 @@ def generate_launch_description():
     ld.add_action(spawn_entity)
     
     ld.add_action(joint_state_broadcaster_spawner)
-    ld.add_action(position_controller_spawner)
-    ld.add_action(velocity_controller_spawner)
-    ld.add_action(my_ackermann_drive_controller_node)
+    # ld.add_action(position_controller_spawner)
+    ld.add_action(delayed_position_controller_spawner)
+    # ld.add_action(velocity_controller_spawner)
+    ld.add_action(delayed_velocity_controller_spawner)
+    # ld.add_action(my_ackermann_drive_controller_node)
+    ld.add_action(delayed_my_ackermann_drive_controller_node)
 
     
     return ld      # return (i.e send) the launch description for excecution

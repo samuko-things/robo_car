@@ -11,6 +11,10 @@ find_package(rclcpp REQUIRED)
 find_package(std_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
 find_package(ackermann_msgs REQUIRED)
+find_package(nav_msgs REQUIRED)
+find_package(sensor_msgs REQUIRED)
+find_package(tf2 REQUIRED)
+find_package(tf2_ros REQUIRED)
 
 
 
@@ -20,7 +24,7 @@ include_directories(include)
 
 # Create Cpp executable
 add_executable(my_ackermann_drive_controller src/my_ackermann_drive_controller.cpp)
-ament_target_dependencies(my_ackermann_drive_controller rclcpp std_msgs geometry_msgs ackermann_msgs)
+ament_target_dependencies(my_ackermann_drive_controller rclcpp std_msgs geometry_msgs ackermann_msgs sensor_msgs nav_msgs tf2 tf2_ros)
 
 
 # Install Cpp executables

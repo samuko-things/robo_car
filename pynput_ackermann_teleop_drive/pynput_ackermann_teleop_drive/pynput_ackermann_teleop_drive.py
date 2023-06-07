@@ -17,8 +17,8 @@ enter drive args in format <car vel> <steer angle in deg>
         """
 
 def process_args_vel():
-    cmd_speed = 0.4 # in m/s
-    steer_angle = 0.43633 # rads => 25 deg
+    cmd_speed = 0.3 # in m/s
+    steer_angle = 0.5236 # rads => 25 deg
     try:
         if len(sys.argv) == 1:
             print(arg_msg)
