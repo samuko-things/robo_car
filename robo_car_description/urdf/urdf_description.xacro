@@ -54,7 +54,7 @@
 
 
     <link name="chassis">
-        <xacro:box_with_fillet size_x="0.4" size_y="0.30" size_z="${chassis_height}" fr="0.08" material="white" x="0.15" y="0" z="${chassis_height/2}"/>
+        <xacro:box_with_fillet size_x="0.4" size_y="0.30" size_z="${chassis_height}" fr="0.08" material="orange" x="0.15" y="0" z="${chassis_height/2}"/>
         <collision>
            <origin xyz="0.15 0 ${chassis_height/2}" rpy="0 0 0"/>
             <geometry>
@@ -66,7 +66,7 @@
         </xacro:inertial_box>
     </link>
     <gazebo reference="chassis">
-        <material>Gazebo/White</material>
+        <material>Gazebo/Orange</material>
     </gazebo>
 
     <!-- <xacro:insert_face parent_name="chassis" x="${0.15+0.2}" y="0" z="${chassis_height/2}"/> -->
@@ -318,7 +318,7 @@
 
 
        <!--  lidar -->
-    <xacro:property name="lidar_z_offset" value="0.1"/>
+    <!-- <xacro:property name="lidar_z_offset" value="0.1"/>
     <xacro:insert_lidar 
         base_name="lidar" 
         parent_name="chassis" 
@@ -326,7 +326,7 @@
         mass="0.08" samples="360"
         min_angle="${-pi*2}" max_angle="${pi*2}"
         min_range="0.1" max_range="10"
-        visualize="false"/>
+        visualize="false"/> -->
 
 
 
@@ -349,11 +349,11 @@
     <xacro:insert_camera
         base_name="cam" 
         parent_name="chassis" 
-        x="${0.15+0.2+cam_x_offset}" y="0" z="${chassis_height+cam_z_offset}"
+        x="${0.15+0.2+cam_x_offset-0.25}" y="0" z="${chassis_height+cam_z_offset+0.15}"
         mass="0.005"
         width="640" height="480"
         min_range="0.02" max_range="5.0"
-        tilt_angle="${pi/6}"
+        tilt_angle="${pi/16}"
         visualize="true"/>
 
 

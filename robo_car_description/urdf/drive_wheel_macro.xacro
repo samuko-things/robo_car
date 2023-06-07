@@ -7,6 +7,12 @@
         </material>
     </xacro:macro>
 
+    <xacro:macro name="material_blue">
+        <material name="blue">
+            <color rgba="0.2 0.2 1 1"/>
+        </material>
+    </xacro:macro>
+
     <xacro:macro name="material_red">
         <material name="red">
             <color rgba="1 0 0 1"/>
@@ -34,7 +40,7 @@
             <kd>0.1</kd>
             <!-- <fdir1>1 0 0</fdir1> -->
             <minDepth>0.002</minDepth>
-            <material>Gazebo/FlatBlack</material>
+            <material>Gazebo/Blue</material>
         </gazebo>
     </xacro:macro>
 
@@ -62,7 +68,7 @@
                 <geometry>
                     <cylinder radius="${radius}" length="${thickness}"/>
                 </geometry>
-                <xacro:material_black/>
+                <xacro:material_blue/>
             </visual>
             <collision>
             <origin xyz="0 0 0" rpy="0 0 0"/>

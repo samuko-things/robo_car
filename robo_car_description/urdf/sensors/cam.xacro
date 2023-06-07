@@ -54,7 +54,7 @@
             <visualize>${visualize}</visualize>
             <update_rate>20</update_rate>
             <camera>
-                <horizontal_fov>1.089</horizontal_fov>
+                <horizontal_fov>1.46608</horizontal_fov>
                 <image>
                     <format>R8G8B8</format>
                     <width>${width}</width>
