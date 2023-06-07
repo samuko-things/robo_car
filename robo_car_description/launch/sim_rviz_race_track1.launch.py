@@ -19,7 +19,7 @@ def generate_launch_description():
 
     package_name='robo_car_description' #<--- CHANGE ME
     
-    world_file_name = 'test_world.world'
+    world_file_name = 'race_track1.world'
     world_path = os.path.join(get_package_share_directory(package_name), 'world', world_file_name)
     
     declare_world_cmd = DeclareLaunchArgument(

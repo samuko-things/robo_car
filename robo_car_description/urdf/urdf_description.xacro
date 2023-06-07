@@ -353,7 +353,7 @@
         mass="0.005"
         width="640" height="480"
         min_range="0.02" max_range="5.0"
-        tilt_angle="${pi/72}"
+        tilt_angle="${pi/6}"
         visualize="true"/>
 
 
