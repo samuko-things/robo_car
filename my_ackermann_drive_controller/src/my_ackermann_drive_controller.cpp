@@ -72,7 +72,7 @@ private:
     // robot parameter
     double max_steer_angle_rad = 1.047196; //rads => 60 deg
     double wheelRadius = 0.05;
-    double D1 = 0.3, L1 = 0.238, L = 0.342, offset=0.031;
+    double D1 = 0.3, L1 = 0.2, L = 0.26, offset=0.03;
 
     // double deg2rad(float degree){
     //     double pi = 3.14159265359;

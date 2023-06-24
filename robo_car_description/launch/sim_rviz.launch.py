@@ -35,7 +35,7 @@ def generate_launch_description():
             launch_arguments={'use_sim_time': 'true'}.items()
     )
     
-    rviz_config_file = os.path.join(get_package_share_directory(package_name),'config','robot_view.rviz')
+    rviz_config_file = os.path.join(get_package_share_directory(package_name),'config','rviz_view.rviz')
     rviz_node = Node(
         package='rviz2',
         executable='rviz2',

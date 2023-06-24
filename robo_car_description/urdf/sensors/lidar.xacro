@@ -14,14 +14,14 @@
                 <geometry>
                     <cylinder radius="0.05" length="0.04"/>
                 </geometry>
-                <material name="black"/>
+                <material name="grey"/>
             </visual>
             <visual>
                 <origin xyz="0 0 -0.05"/>
                 <geometry>
                     <cylinder radius="0.01" length="0.1"/>
                 </geometry>
-                <material name="black"/>
+                <material name="grey"/>
             </visual>
             <collision>
                 <geometry>

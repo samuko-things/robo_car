@@ -19,7 +19,7 @@ def generate_launch_description():
     # delare any path variable
     my_pkg_path = get_package_share_directory('robo_car_description')
     
-    rviz_config_file = os.path.join(my_pkg_path,'config','robot_view.rviz')
+    rviz_config_file = os.path.join(my_pkg_path,'config','rviz_view.rviz')
 
   
   

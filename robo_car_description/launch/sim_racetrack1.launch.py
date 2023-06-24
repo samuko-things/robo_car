@@ -19,7 +19,7 @@ def generate_launch_description():
 
     package_name='robo_car_description' #<--- CHANGE ME
     
-    world_file_name = 'race_track1.world'
+    world_file_name = 'racetrack1.world'
     world_path = os.path.join(get_package_share_directory(package_name), 'world', world_file_name)
     
     declare_world_cmd = DeclareLaunchArgument(
@@ -33,14 +33,6 @@ def generate_launch_description():
                 [os.path.join(get_package_share_directory(package_name),'launch','rsp.launch.py')]
             ), 
             launch_arguments={'use_sim_time': 'true'}.items()
-    )
-    
-    rviz_config_file = os.path.join(get_package_share_directory(package_name),'config','robot_view.rviz')
-    rviz_node = Node(
-        package='rviz2',
-        executable='rviz2',
-        arguments=['-d', rviz_config_file],
-        output='screen'
     )
 
     gazebo_params_file = os.path.join(get_package_share_directory(package_name),'config','gazebo_params.yaml')
@@ -71,9 +63,6 @@ def generate_launch_description():
             '-R', str(roll), '-P', str(pitch), '-Y', str(yaw)
             ],
         output='screen')
-
-
-
 
 
     position_controller_spawner = Node(
@@ -136,7 +125,6 @@ def generate_launch_description():
     
     # Add the nodes to the launch description
     ld.add_action(rsp)
-    ld.add_action(rviz_node)
     ld.add_action(gazebo)
     ld.add_action(spawn_entity)
     
