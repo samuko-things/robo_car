@@ -54,6 +54,7 @@
             <visualize>${visualize}</visualize>
             <update_rate>20</update_rate>
             <camera>
+                <!-- <horizontal_fov>1.089</horizontal_fov> -->
                 <horizontal_fov>1.46608</horizontal_fov>
                 <image>
                     <format>R8G8B8</format>
@@ -75,3 +76,56 @@
         
 
 </robot>
+
+
+
+ <!-- <joint name="line_cam_joint" type="fixed">
+        <parent link="chassis"/>
+        <child link="line_cam"/>
+        <origin xyz="0.305 0 0.08" rpy="0 0 0"/>
+    </joint>
+ 
+    <link name="line_cam">
+        <visual>
+            <geometry>
+                <box size="0.010 0.03 0.03"/>
+            </geometry>
+            <material name="red"/>
+        </visual>
+    </link>
+ 
+ 
+    <joint name="line_cam_optical_joint" type="fixed">
+        <parent link="line_cam"/>
+        <child link="line_cam_link_optical"/>
+        <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    </joint>
+ 
+    <link name="line_cam_link_optical"></link>
+ 
+ 
+ 
+    <gazebo reference="line_cam">
+        <material>Gazebo/Red</material>
+ 
+        <sensor name="line_cam" type="camera">
+            <pose> 0 0 0 0 0 0 </pose>
+            <visualize>true</visualize>
+            <update_rate>10</update_rate>
+            <camera>
+                <horizontal_fov>1.089</horizontal_fov>
+                <image>
+                    <format>R8G8B8</format>
+                    <width>640</width>
+                    <height>480</height>
+                </image>
+                <clip>
+                    <near>0.05</near>
+                    <far>8.0</far>
+                </clip>
+            </camera>
+            <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+                <frame_name>line_cam_link_optical</frame_name>
+            </plugin>
+        </sensor>
+    </gazebo> -->

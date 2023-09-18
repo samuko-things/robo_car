@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
-<robot name="robo_car" xmlns:xacro="http://ros.org/wiki/xacro">
+<robot xmlns:xacro="http://ros.org/wiki/xacro">
     
-    <xacro:include filename="$(find robo_car_description)/urdf/transmission_macros.xacro"/>
+    <xacro:include filename="transmission_macros.xacro"/>
 
 
     <ros2_control name="GazeboSystem" type="system">
