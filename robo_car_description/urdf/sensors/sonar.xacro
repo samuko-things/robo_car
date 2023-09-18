@@ -8,6 +8,7 @@
 
 
     <xacro:macro name="insert_sonar" params="base_name parent_name x y z mass min_range max_range resolution visualize">
+
         <joint name="${base_name}_joint" type="fixed">
             <parent link="${parent_name}"/>
             <child link="${base_name}"/>
@@ -16,22 +17,35 @@
 
         <link name="${base_name}">
             <visual>
-                <origin xyz="-0.005 0 0" rpy="0 ${pi/2} 0"/>
+                <origin xyz="0 0.01 0" rpy="0 ${pi/2} 0"/>
                 <geometry>
-                    <cylinder radius="0.015" length="0.01" />
+                    <cylinder radius="0.006" length="0.006"/>
                 </geometry>
                 <material name="blue"/>
             </visual>
-
             <collision>
-                <origin xyz="-0.005 0 0" rpy="0 ${pi/2} 0"/>
+                <origin xyz="0 0.01 0" rpy="0 ${pi/2} 0"/>
                 <geometry>
-                    <cylinder radius="0.015" length="0.01" />
+                    <cylinder radius="0.006" length="0.006"/>
                 </geometry>
             </collision>
-            
-            <xacro:inertial_cylinder mass="${mass}" length="0.01" radius="0.01">
-                <origin xyz="-0.005 0 0" rpy="0 0 0"/>
+
+            <visual>
+                <origin xyz="0 -0.01 0" rpy="0 ${pi/2} 0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.006"/>
+                </geometry>
+                <material name="blue"/>
+            </visual>
+            <collision>
+                <origin xyz="0 -0.01 0" rpy="0 ${pi/2} 0"/>
+                <geometry>
+                    <cylinder radius="0.006" length="0.006"/>
+                </geometry>
+            </collision>
+
+            <xacro:inertial_cylinder mass="${mass}" length="0.006" radius="0.006">
+                <origin xyz="0 0.01 0" rpy="0 ${pi/2} 0"/>
             </xacro:inertial_cylinder>
         </link>
 

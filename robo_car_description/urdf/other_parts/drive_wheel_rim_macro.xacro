@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+    <!-- <xacro:macro name="material_blue">
+        <material name="blue">
+        <color rgba="0.2 0.2 1 1"/>
+    </material>
+    </xacro:macro> -->
+
+    <xacro:macro name="material_red">
+        <material name="red">
+            <color rgba="1 0 0 1"/>
+        </material>
+    </xacro:macro>
+
+    <xacro:macro name="insert_drive_wheel_rim" params="base_name parent_name x y z radius thickness spoke_width">
+
+        <joint name="${base_name}_joint" type="fixed">
+            <parent link="${parent_name}"/>
+            <child link="${base_name}"/>
+            <origin xyz="${x} ${y} ${z}" rpy="0 0 0"/>
+        </joint>
+
+        <link name="${base_name}">
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 0"/>
+                <geometry>
+                    <box size="${spoke_width} ${radius*1.2} ${thickness}"/>
+                </geometry>
+                <!-- <xacro:material_blue/> -->
+                <xacro:material_red/>
+            </visual>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 ${pi/2}"/>
+                <geometry>
+                    <box size="${spoke_width} ${radius*1.2} ${thickness}"/>
+                </geometry>
+                <!-- <xacro:material_blue/> -->
+                <xacro:material_red/>
+            </visual>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 ${-pi/4}"/>
+                <geometry>
+                    <box size="${spoke_width} ${radius*1.2} ${thickness}"/>
+                </geometry>
+                <!-- <xacro:material_blue/> -->
+                <xacro:material_red/>
+            </visual>
+            <visual>
+                <origin xyz="0 0 0" rpy="0 0 ${pi/4}"/>
+                <geometry>
+                    <box size="${spoke_width} ${radius*1.2} ${thickness}"/>
+                </geometry>
+                <!-- <xacro:material_blue/> -->
+                <xacro:material_red/>
+            </visual>
+
+        </link>
+
+        <!-- <gazebo reference="${base_name}">
+            <material>Gazebo/SkyBlue</material>
+        </gazebo> -->
+
+        <gazebo reference="${base_name}">
+            <material>Gazebo/Red</material>
+        </gazebo>
+
+    </xacro:macro>
+
+    
+</robot>

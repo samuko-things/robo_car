@@ -10,26 +10,20 @@
 
         <link name="${base_name}">
             <visual>
-                <origin xyz="0 0 0"/>
+                <origin xyz="0 0 -0.02"/>
                 <geometry>
-                    <cylinder radius="0.05" length="0.04"/>
-                </geometry>
-                <material name="grey"/>
-            </visual>
-            <visual>
-                <origin xyz="0 0 -0.05"/>
-                <geometry>
-                    <cylinder radius="0.01" length="0.1"/>
+                    <cylinder radius="0.03" length="0.04"/>
                 </geometry>
                 <material name="grey"/>
             </visual>
             <collision>
+                <origin xyz="0 0 -0.02"/>
                 <geometry>
-                    <cylinder radius="0.05" length="0.04"/>
+                    <cylinder radius="0.03" length="0.04"/>
                 </geometry>
             </collision>
-            <xacro:inertial_cylinder mass="${mass}" length="0.04" radius="0.05">
-                <origin xyz="0 0 0" rpy="0 0 0"/>
+            <xacro:inertial_cylinder mass="${mass}" length="0.04" radius="0.03">
+                <origin xyz="0 0 -0.02" rpy="0 0 0"/>
             </xacro:inertial_cylinder>
         </link>
 

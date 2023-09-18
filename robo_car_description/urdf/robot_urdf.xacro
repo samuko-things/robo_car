@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<robot name="robo_car" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+    <xacro:include filename="color_macros.xacro" />
+    
+    <xacro:include filename="inertia_macros.xacro" />
+
+    <xacro:include filename="robot_core.xacro" />
+
+    <xacro:include filename="controllers/gazebo_hw_ros2_control.xacro" />
+    
+</robot>
