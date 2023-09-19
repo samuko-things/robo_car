@@ -24,9 +24,9 @@
         <gazebo reference="${name}">
             <mu1>1.0</mu1>
             <mu2>1.0</mu2>
-            <!-- <kp>1000000</kp> -->
-            <!-- <kd>0.001</kd> -->
-            <!-- <minDepth>0.001</minDepth> -->
+            <kp>1000000</kp>
+            <kd>0.01</kd>
+            <minDepth>0.001</minDepth>
             <!-- <fdir1>${fdir}</fdir1> -->
             <material>Gazebo/FlatBlack</material>
         </gazebo>
