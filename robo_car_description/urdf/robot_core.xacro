@@ -95,7 +95,7 @@
             </geometry>
         </collision>
         
-        <xacro:inertial_box mass="4.0" x="0.4" y="0.2" z="${chassis_height}">
+        <xacro:inertial_box mass="2.0" x="0.4" y="0.2" z="${chassis_height}">
             <origin xyz="0.15 0 ${chassis_height/2}" rpy="0 0 0"/>
         </xacro:inertial_box>
     </link>
@@ -308,7 +308,7 @@
         base_name="lidar" 
         parent_name="chassis" 
         x="0.2" y="0" z="${chassis_height+lidar_z_offset}"
-        mass="0.1" samples="360"
+        mass="0.05" samples="360"
         min_angle="${-pi*2}" max_angle="${pi*2}"
         min_range="0.1" max_range="10"
         visualize="false"/>

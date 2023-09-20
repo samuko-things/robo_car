@@ -93,13 +93,13 @@
     <model name='race_track1'>
       <static>1</static>
       <link name='link'>
-        <pose>0 0 0.008 0 -0 0</pose>
+        <pose>0 0 0.0001 0 -0 0</pose>
         <visual name='visual'>
           <cast_shadows>0</cast_shadows>
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>15.26 7</size>
+              <size>12.5 7.5</size>
             </plane>
           </geometry>
           <material>
@@ -114,13 +114,13 @@
         <enable_wind>0</enable_wind>
         <kinematic>0</kinematic>
       </link>
-      <pose>0.209955 2.49654 0 0 -0 0</pose>
+      <pose>0.133006 2.68953 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>91 745000000</sim_time>
-      <real_time>92 631691905</real_time>
-      <wall_time>1687562638 765633256</wall_time>
-      <iterations>91745</iterations>
+      <sim_time>62 103000000</sim_time>
+      <real_time>62 868067928</real_time>
+      <wall_time>1695167548 503622497</wall_time>
+      <iterations>62103</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -132,10 +132,10 @@
         </link>
       </model>
       <model name='race_track1'>
-        <pose>0.209955 2.49654 0 0 -0 0</pose>
+        <pose>0.133006 2.68953 0 0 -0 0</pose>
         <scale>1 1 1</scale>
         <link name='link'>
-          <pose>0.209955 2.49654 0.008 0 -0 0</pose>
+          <pose>0.133006 2.68953 0.0001 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -147,7 +147,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>3.23515 -4.68812 9.35658 0 1.04764 2.14819</pose>
+        <pose>-2.09242 -0.875632 7.44968 0 1.15164 0.804194</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>
